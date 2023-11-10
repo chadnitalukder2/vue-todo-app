@@ -53,6 +53,7 @@
       },
       deleteTodo(index) {
         this.todos = this.todos.filter((todo, toIndex) => toIndex !== index);
+        console.log(index,"hi")
       },
       todoUpdate(index) {
         if (this.todos[index].complete == "no") {
@@ -61,7 +62,7 @@
           this.todos[index].complete = "no";
         }
       },
-      
+
     },
   
     mounted() {
