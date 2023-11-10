@@ -2,23 +2,27 @@
     <div id="app">
       <div class="container">
         <h1>Todo List App</h1>
+
         <div class="search-box">
           <input v-model="todo" type="text" placeholder="Add Todo" />
           <button type="submit" @click="addList()">Add</button>
         </div>
+
         <ol>
           <li v-for="(todo, index) in todos" :key="index">
+            
             <div class="info">
               <span>{{ todo.id }}.</span>
               <p :class="todo.complete == 'yes' ? 'complete' : ''">
                 {{ todo.title }}
               </p>
             </div>
+
             <div class="action">
               <input @click="todoUpdate(index)" type="checkbox" id="myCheckbox" />
-  
               <button @click="deleteTodo(index)">Delete</button>
             </div>
+
           </li>
         </ol>
       </div>
@@ -57,6 +61,7 @@
           this.todos[index].complete = "no";
         }
       },
+      
     },
   
     mounted() {
