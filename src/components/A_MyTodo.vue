@@ -105,6 +105,7 @@ methods:{
         margin-top: 40px;
         width: 100%;
         border-radius: 6px;
+        margin-bottom: 40px;
 
         input {
             width: 82%;
@@ -129,7 +130,7 @@ methods:{
 
     }
     ul li {
-        margin-top: 40px;
+    
         list-style: none;
         display: flex;
         justify-content: space-between;
