@@ -8,12 +8,12 @@
           <button type="submit" @click="addList()">Add</button>
         </div>
 
-        <ol>
+        <ul>
           <li v-for="(todo, index) in todos" :key="index">
             
             <div class="info">
               <span>{{ todo.id }}.</span>
-              <p :class="todo.complete == 'yes' ? 'complete' : ''">
+              <p :class=" todo.complete == 'yes' ? 'complete' : '' ">
                 {{ todo.title }}
               </p>
             </div>
@@ -24,7 +24,7 @@
             </div>
 
           </li>
-        </ol>
+        </ul>
       </div>
     </div>
   </template>
@@ -34,8 +34,9 @@
   export default {
     data() {
       return {
-        todos: [],
         todo: "",
+        todos: JSON.parse(localStorage.getItem("todos")) || [],
+      
       };
     },
     methods: {
@@ -49,11 +50,13 @@
           complete: "no",
         };
         this.todos.push(data);
+        this.saveToLocalStorage();
         this.todo = "";
       },
       deleteTodo(index) {
         this.todos = this.todos.filter((todo, toIndex) => toIndex !== index);
         console.log(index,"hi")
+        this.saveToLocalStorage();
       },
       todoUpdate(index) {
         if (this.todos[index].complete == "no") {
@@ -61,7 +64,12 @@
         } else {
           this.todos[index].complete = "no";
         }
+        this.saveToLocalStorage();
       },
+
+      saveToLocalStorage() {
+            localStorage.setItem("todos", JSON.stringify(this.todos));
+        },
 
     },
   

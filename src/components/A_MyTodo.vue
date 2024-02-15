@@ -9,16 +9,16 @@
         </div>
 
         <ul>
-            <li  v-for="(todo,index) in todos" :key="index">
+            <li v-for="(todo,index) in todos" :key="index">
                 <div class="info">
                     <span>{{ todo.id }}.</span>
                     <p :class="todo.complete === 'yes' ? 'complete' : '' ">
                         {{ todo.title }}</p>
-                    
+
                 </div>
 
                 <div class="action">
-                    <input @click="todoUpdate(index)" type="checkbox">
+                    <input @click="todoUpdate(index)" type="checkbox" id="myCheckbox">
                     <button @click="deleteTodo(index)">Delete</button>
 
                 </div>
@@ -30,64 +30,71 @@
 </template>
 
 <script>
+import Apptodo from "./data.js";
+
 export default {
-name:"A_MyTodo",
-data(){
-    return{
-        todo: "",
-        todos:JSON.parse(localStorage.getItem("todos")) || [],
-    }
-},
-methods:{
-    addTodo(){
-        if (!this.todo) {
-          return alert("Please enter your todo");
+    name: "A_MyTodo",
+    data() {
+        return {
+            todo: "",
+            todos: JSON.parse(localStorage.getItem("todos")) || [],
         }
-        let data ={
-              title: this.todo,
-              id: this.todos.length + 1,
-              complete: "no"
-        };
-        this.todos.push(data);
-        this.saveToLocalStorage();
-        this.todo =""
     },
-    deleteTodo(index){
-        this.todos = this.todos.filter((todo,toIndex) => toIndex != index )
-        this.saveToLocalStorage();
+    methods: {
+        addTodo() {
+            if (!this.todo) {
+                return alert("Please enter your todo");
+            }
+            let data = {
+                title: this.todo,
+                id: this.todos.length + 1,
+                complete: "no"
+            };
+            this.todos.push(data);
+            this.saveToLocalStorage();
+            this.todo = ""
+        },
+        deleteTodo(index) {
+            this.todos = this.todos.filter((todo, toIndex) => toIndex != index)
+            this.saveToLocalStorage();
+        },
+        todoUpdate(index) {
+            if (this.todos[index].complete === "no") {
+                this.todos[index].complete = "yes"
+            } else {
+                this.todos[index].complete = "no"
+            }
+            this.saveToLocalStorage();
+        },
+        saveToLocalStorage() {
+            localStorage.setItem("todos", JSON.stringify(this.todos));
+        },
     },
-    todoUpdate(index){ 
-        if(this.todos[index].complete === "no"){
-            this.todos[index].complete = "yes"
-        }
-        else{
-            this.todos[index].complete = "no"
-        }
-        this.saveToLocalStorage();
+
+    mounted() {
+      this.todos = Apptodo;
     },
-    saveToLocalStorage() {
-        localStorage.setItem("todos", JSON.stringify(this.todos));
-      },
-}
 
 }
 </script>
 
 <style lang="scss" scoped>
-*{
+* {
     margin: 0px;
     padding: 0px;
     font-family: 'Merriweather', sans-serif;
     box-sizing: border-box;
 }
-.app-todo{
+
+.app-todo {
     background: rgba(33, 37, 41, 0.07);
     padding: 50px;
     width: 100%;
     height: 100%;
 
 }
-.container{
+
+.container {
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
@@ -95,11 +102,13 @@ methods:{
     text-align: center;
     border-radius: 8px;
     padding: 20px;
-    h1{
+
+    h1 {
         font-size: 30px;
         margin: 20px 0px 50px 0px;
         color: #333;
     }
+
     .search-box {
         border: 1px solid rgb(33 37 41 / 17%);
         margin-top: 40px;
@@ -113,10 +122,11 @@ methods:{
             border: none;
             outline: none;
             border-radius: 3px;
+
             &:focus-visible {
-            outline: 0.5px solid rgb(151, 59, 236);
-        }
-         
+                outline: 0.5px solid rgb(151, 59, 236);
+            }
+
         }
 
         button {
@@ -129,8 +139,9 @@ methods:{
         }
 
     }
+
     ul li {
-    
+
         list-style: none;
         display: flex;
         justify-content: space-between;
@@ -138,8 +149,9 @@ methods:{
         border-bottom: 1px solid #0000002e;
 
         &:last-child {
-          border-bottom: none;
+            border-bottom: none;
         }
+
         .info {
             display: flex;
             gap: 20px;
